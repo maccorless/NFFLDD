@@ -6,7 +6,7 @@ A two-league draft-date voting app for the NFFL Wags & NFFL Fex fantasy football
 
 | File | Purpose |
 |---|---|
-| `NFFL War Room.html` | Entry point — open this in a browser |
+| `index.html` | Entry point — open in a browser or served automatically by Netlify |
 | `app.jsx` | All React components (landing, name picker, poll grid, modal) |
 | `app.css` | App-specific styles |
 | `tokens.css` | NFFL design tokens (colors, type, spacing) |
@@ -28,7 +28,7 @@ State persists to `localStorage` per league. No backend.
 
 ## Running
 
-Just open `NFFL War Room.html` in a browser. For GitHub Pages, push everything to a branch and enable Pages on it — set the source to root.
+Open `index.html` in a browser locally, or deploy to Netlify — connect the repo, publish directory `/`, no build command.
 
 ## TODOs
 
