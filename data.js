@@ -75,8 +75,8 @@ window.LEAGUES = {
     name: "NFFL Fex",
     badge: "Fex",
     est: "EST · 1998",
-    logo: "assets/nffl-wags.png", // TODO: replace with assets/nffl-fex.png when provided
-    logoPlaceholder: true,
+    logo: "assets/fex.png",
+    logoPlaceholder: false,
     sub: "12 managers · The Sequel",
     managers: [
       { name: "Ken", team: "Four Sure" },
