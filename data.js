@@ -52,7 +52,8 @@ window.LEAGUES = {
     name: "NFFL Wags",
     badge: "Wags",
     est: "EST · 1995",
-    logo: "assets/nffl-wags.png",
+    logo: "assets/wags.png",
+    logoContain: true,
     sub: "12 managers · The OG",
     managers: [
       { name: "DJ", team: "Delusional Jokers" },
@@ -77,6 +78,7 @@ window.LEAGUES = {
     est: "EST · 1998",
     logo: "assets/fex.png",
     logoPlaceholder: false,
+    logoContain: true,
     sub: "12 managers · The Sequel",
     managers: [
       { name: "Ken", team: "Four Sure" },

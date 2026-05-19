@@ -319,7 +319,12 @@ function LeagueLogoCard({ league, onClick }) {
   return (
     <button className="logo-card" onClick={onClick} aria-label={league.name}>
       <div className="logo-art">
-        <img src={league.logo} alt={league.name} draggable="false" />
+        <img
+          src={league.logo}
+          alt={league.name}
+          draggable="false"
+          className={league.logoContain ? "logo-contain" : undefined}
+        />
         {league.logoPlaceholder && (
           <div className="fex-overlay">
             <span className="fex-overlay-text">{league.badge}</span>
@@ -357,7 +362,12 @@ function Landing({ onPick }) {
 function LeagueMiniLogo({ league }) {
   return (
     <div className="league-mini-logo">
-      <img src={league.logo} alt="" draggable="false" />
+      <img
+        src={league.logo}
+        alt=""
+        draggable="false"
+        className={league.logoContain ? "logo-contain" : undefined}
+      />
       {league.logoPlaceholder && (
         <div className="fex-mini-overlay">
           <span>{league.badge}</span>
