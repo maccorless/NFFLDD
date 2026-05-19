@@ -1,0 +1,365 @@
+/* ============================================================
+   NFFL DRAFT APP — DESIGN TOKENS
+   Upload this file to Claude Design during onboarding.
+   All projects will inherit these tokens automatically.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   GOOGLE FONTS
+   Include this @import in any HTML file that uses these tokens.
+   Claude Design will handle font loading automatically.
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@600;700&display=swap');
+
+/* ------------------------------------------------------------
+   ROOT TOKENS
+   ------------------------------------------------------------ */
+:root {
+
+  /* --- COLOR: BACKGROUNDS --- */
+  --color-bg-page:         #0D1B3E;   /* Night Field — primary page bg */
+  --color-bg-card:         #111F4A;   /* Card surface — slightly lifted */
+  --color-bg-card-hover:   #162555;   /* Card hover state */
+  --color-bg-input:        rgba(255, 255, 255, 0.07); /* Form inputs on dark */
+  --color-bg-overlay:      rgba(13, 27, 62, 0.85);    /* Modals, drawers */
+
+  /* --- COLOR: BRAND PALETTE --- */
+  --color-gold:            #C6A330;   /* Draft Gold — primary CTA, selected state, wins */
+  --color-gold-light:      #E8C84A;   /* Gold hover / highlight */
+  --color-gold-muted:      rgba(198, 163, 48, 0.15); /* Gold tint on dark bg */
+
+  --color-navy:            #013369;   /* Shield Navy — secondary actions, dividers */
+  --color-navy-light:      #0A4A8F;   /* Navy hover */
+
+  --color-red:             #D50A0A;   /* Red Zone — urgency, live badge, cancel */
+  --color-red-muted:       rgba(213, 10, 10, 0.12);  /* Red tint background */
+
+  --color-green:           #1E5631;   /* Turf Green — confirmed, locked in, success */
+  --color-green-light:     #27723F;   /* Green hover */
+  --color-green-muted:     rgba(30, 86, 49, 0.20);   /* Green tint background */
+
+  /* --- COLOR: TEXT --- */
+  --color-text-primary:    #F2F2F0;   /* Chalk White — headlines, primary copy */
+  --color-text-secondary:  rgba(242, 242, 240, 0.65); /* Supporting copy */
+  --color-text-muted:      rgba(242, 242, 240, 0.40); /* Timestamps, hints */
+  --color-text-inverse:    #0D1B3E;   /* Text on gold/light backgrounds */
+
+  /* --- COLOR: BORDERS --- */
+  --color-border-default:  rgba(255, 255, 255, 0.10); /* Subtle card border */
+  --color-border-active:   rgba(198, 163, 48, 0.60);  /* Selected / focused */
+  --color-border-strong:   rgba(255, 255, 255, 0.25); /* Emphasized border */
+
+  /* --- COLOR: SEMANTIC STATUS --- */
+  --color-status-live-bg:  rgba(213, 10, 10, 0.12);
+  --color-status-live-fg:  #F07070;
+  --color-status-open-bg:  rgba(1, 51, 105, 0.25);
+  --color-status-open-fg:  #7AAEE8;
+  --color-status-done-bg:  rgba(30, 86, 49, 0.20);
+  --color-status-done-fg:  #5BC87F;
+  --color-status-gold-bg:  rgba(198, 163, 48, 0.15);
+  --color-status-gold-fg:  #C6A330;
+
+  /* --- TYPOGRAPHY --- */
+  --font-display:          'Oswald', sans-serif;         /* Hero titles, scorebugs, draft clock */
+  --font-heading:          'Barlow Condensed', sans-serif; /* Section heads, buttons, labels */
+  --font-body:             'Barlow', sans-serif;          /* All body copy, inputs, captions */
+
+  --text-display:          700 36px/1.05 var(--font-display);   /* Page hero */
+  --text-title:            700 24px/1.1  var(--font-display);   /* Card titles */
+  --text-heading:          700 18px/1.2  var(--font-heading);   /* Section headings */
+  --text-subheading:       600 14px/1.3  var(--font-heading);   /* Labels, badge text */
+  --text-body:             400 15px/1.65 var(--font-body);      /* Paragraphs */
+  --text-body-strong:      600 15px/1.65 var(--font-body);      /* Emphasized body */
+  --text-caption:          500 12px/1.4  var(--font-body);      /* Timestamps, hints */
+  --text-btn:              700 15px/1    var(--font-heading);   /* Button labels */
+
+  --letter-spacing-display:   0.02em;
+  --letter-spacing-heading:   0.04em;
+  --letter-spacing-btn:       0.06em;
+  --letter-spacing-badge:     0.08em;
+
+  /* --- SPACING --- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+
+  /* --- BORDER RADIUS --- */
+  --radius-sm:   6px;    /* Badges, chips */
+  --radius-md:   8px;    /* Buttons, inputs */
+  --radius-lg:   12px;   /* Cards, date option rows */
+  --radius-xl:   16px;   /* Modal panels, sheet drawers */
+  --radius-full: 9999px; /* Pills, avatar circles */
+
+  /* --- TOUCH & SIZING --- */
+  --touch-target:    48px;  /* Min height for all tappable elements — mobile-first */
+  --touch-target-sm: 40px;  /* Secondary actions (icon buttons) */
+  --card-padding:    20px;
+  --page-margin:     16px;  /* Mobile page edge padding */
+  --page-margin-lg:  32px;  /* Desktop page edge padding */
+  --max-width-card:  400px; /* Poll card max width on desktop */
+  --max-width-page:  480px; /* Single-column page max width */
+
+  /* --- MOTION --- */
+  --duration-fast:     120ms;
+  --duration-base:     200ms;
+  --duration-slow:     350ms;
+  --ease-default:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);   /* Bounce on select */
+  --ease-out:          cubic-bezier(0.0, 0.0, 0.2, 1.0);
+
+  /* --- ELEVATION (box-shadow on dark bg) --- */
+  --shadow-card:   0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-modal:  0 8px 32px rgba(0, 0, 0, 0.55);
+  --shadow-glow-gold: 0 0 0 3px rgba(198, 163, 48, 0.30); /* Focus ring on gold elements */
+  --shadow-glow-blue: 0 0 0 3px rgba(1, 51, 105, 0.50);   /* Focus ring on inputs */
+
+  /* --- Z-INDEX SCALE --- */
+  --z-base:     1;
+  --z-card:     10;
+  --z-dropdown: 100;
+  --z-modal:    200;
+  --z-toast:    300;
+}
+
+
+/* ============================================================
+   BASE COMPONENT STYLES
+   Copy-paste these directly into your app's global stylesheet.
+   ============================================================ */
+
+/* --- RESET / BASE --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font: var(--text-body);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* --- TYPOGRAPHY UTILITIES --- */
+.text-display   { font: var(--text-display);    letter-spacing: var(--letter-spacing-display); text-transform: uppercase; }
+.text-title     { font: var(--text-title);      letter-spacing: var(--letter-spacing-display); }
+.text-heading   { font: var(--text-heading);    letter-spacing: var(--letter-spacing-heading); text-transform: uppercase; }
+.text-subheading{ font: var(--text-subheading); letter-spacing: var(--letter-spacing-heading); text-transform: uppercase; }
+.text-body      { font: var(--text-body); }
+.text-caption   { font: var(--text-caption);    color: var(--color-text-muted); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted     { color: var(--color-text-muted); }
+.text-gold      { color: var(--color-gold); }
+.text-red       { color: var(--color-red); }
+
+/* --- CARD --- */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-card);
+}
+
+/* --- BUTTONS --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-md);
+  font: var(--text-btn);
+  letter-spacing: var(--letter-spacing-btn);
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: background var(--duration-base) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default);
+  text-decoration: none;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--color-gold);
+  color: var(--color-text-inverse);
+}
+.btn-primary:hover { background: var(--color-gold-light); }
+.btn-primary:focus-visible { outline: none; box-shadow: var(--shadow-glow-gold); }
+
+.btn-secondary {
+  background: var(--color-navy);
+  color: var(--color-text-primary);
+}
+.btn-secondary:hover { background: var(--color-navy-light); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1.5px solid var(--color-border-strong);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.06); }
+
+.btn-danger {
+  background: var(--color-red);
+  color: var(--color-text-primary);
+}
+
+.btn-full { width: 100%; }
+
+/* --- INPUTS --- */
+.input {
+  display: block;
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font: var(--text-body);
+  transition: border-color var(--duration-base) var(--ease-default);
+  outline: none;
+}
+.input::placeholder { color: var(--color-text-muted); }
+.input:focus {
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+/* --- DATE OPTION ROW (core poll component) --- */
+.date-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--touch-target);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-input);
+  border: 1.5px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-default),
+              background var(--duration-base) var(--ease-default),
+              transform var(--duration-fast) var(--ease-spring);
+  margin-bottom: var(--space-2);
+  user-select: none;
+}
+.date-option:hover {
+  border-color: var(--color-border-strong);
+  background: rgba(255,255,255,0.09);
+}
+.date-option.selected {
+  border-color: var(--color-gold);
+  background: var(--color-gold-muted);
+  transform: scale(1.01);
+}
+.date-option.leading {
+  border-color: var(--color-green);
+  background: var(--color-green-muted);
+}
+
+/* --- STATUS BADGES --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font: var(--text-subheading);
+  letter-spacing: var(--letter-spacing-badge);
+  text-transform: uppercase;
+}
+.badge-live   { background: var(--color-status-live-bg); color: var(--color-status-live-fg); }
+.badge-open   { background: var(--color-status-open-bg); color: var(--color-status-open-fg); }
+.badge-done   { background: var(--color-status-done-bg); color: var(--color-status-done-fg); }
+.badge-locked { background: var(--color-status-gold-bg); color: var(--color-status-gold-fg); }
+
+/* --- VOTE PIPS --- */
+.vote-pip {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.vote-pip.filled {
+  background: var(--color-gold-muted);
+  border-color: var(--color-gold);
+}
+
+/* --- DIVIDER --- */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+  margin: var(--space-5) 0;
+}
+
+/* --- PROGRESS BAR --- */
+.progress-track {
+  height: 6px;
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--color-gold);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+/* --- AVATAR / INITIALS --- */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: var(--color-text-primary);
+  font: var(--text-subheading);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* --- LAYOUT UTILITIES --- */
+.page-container {
+  max-width: var(--max-width-page);
+  margin: 0 auto;
+  padding: var(--space-6) var(--page-margin);
+}
+
+.stack { display: flex; flex-direction: column; }
+.stack-2 { gap: var(--space-2); }
+.stack-3 { gap: var(--space-3); }
+.stack-4 { gap: var(--space-4); }
+.stack-6 { gap: var(--space-6); }
+
+.row { display: flex; flex-direction: row; align-items: center; }
+.row-between { justify-content: space-between; }
+.row-center  { justify-content: center; }
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+/* Mobile-first. Tablet+ at 640px, Desktop at 1024px */
+@media (min-width: 640px) {
+  :root {
+    --page-margin: var(--page-margin-lg);
+    --card-padding: 24px;
+  }
+  .text-display { font-size: 48px; }
+}
