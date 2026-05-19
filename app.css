@@ -169,8 +169,10 @@ body::before {
   object-position: center;
 }
 .logo-art img.logo-contain {
+  box-sizing: border-box;
   object-fit: contain;
   padding: 16px;
+  background: #0A1733;
 }
 .logo-card:hover .logo-art {
   transform: translateY(-6px) scale(1.012);
@@ -269,7 +271,7 @@ body::before {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .league-mini-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.league-mini-logo img.logo-contain { object-fit: contain; padding: 6px; }
+.league-mini-logo img.logo-contain { box-sizing: border-box; object-fit: contain; padding: 6px; background: #0A1733; }
 .league-mini-logo .fex-mini-overlay {
   position: absolute;
   left: 0; right: 0; bottom: 0;

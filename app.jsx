@@ -351,7 +351,9 @@ function Landing({ onPick }) {
           onClick={() => onPick("fex")}
         />
       </div>
-      <div className="logo-tag-bottom">Draft Night · Where the brains are</div>
+      <div className="logo-tag-bottom">
+        Draft Night · Where legends are born
+      </div>
     </div>
   );
 }
