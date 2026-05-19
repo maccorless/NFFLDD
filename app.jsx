@@ -1,6 +1,10 @@
 // NFFL War Room — single-file React app
 
 const { useState, useEffect, useRef, useMemo } = React;
+const db = window.supabase.createClient(
+  window.SUPABASE_URL,
+  window.SUPABASE_ANON_KEY,
+);
 
 // ─────────────────────────────────────────────────────────────
 // ICONS
@@ -8,66 +12,156 @@ const { useState, useEffect, useRef, useMemo } = React;
 const Icon = {
   Arrow: ({ size = 18 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h14m-5-5l5 5-5 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M5 12h14m-5-5l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   Back: ({ size = 18 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M15 19l-7-7 7-7"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   CheckCircle: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="2" fill="none"/>
-      <path d="M8 12l3 3 5-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+      <circle
+        cx="12"
+        cy="12"
+        r="9.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <path
+        d="M8 12l3 3 5-6"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   ),
   Thumb: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M9 21V11l4-7c1.5 0 2.5 1 2.5 2.5L14 10h5a2 2 0 012 2l-1.5 7a2 2 0 01-2 1.6L9 21z"
-            stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" fill="none"/>
-      <path d="M3 11h4v10H3z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" fill="none"/>
+      <path
+        d="M9 21V11l4-7c1.5 0 2.5 1 2.5 2.5L14 10h5a2 2 0 012 2l-1.5 7a2 2 0 01-2 1.6L9 21z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path
+        d="M3 11h4v10H3z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   ),
   Help: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="2" fill="none"/>
-      <path d="M9.4 9.5a2.6 2.6 0 015.2.3c0 1.6-2.6 1.9-2.6 3.7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      <circle cx="12" cy="17.2" r="1.2" fill="currentColor"/>
+      <circle
+        cx="12"
+        cy="12"
+        r="9.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <path
+        d="M9.4 9.5a2.6 2.6 0 015.2.3c0 1.6-2.6 1.9-2.6 3.7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="12" cy="17.2" r="1.2" fill="currentColor" />
     </svg>
   ),
   XCircle: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="2" fill="none"/>
-      <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/>
+      <circle
+        cx="12"
+        cy="12"
+        r="9.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <path
+        d="M8 8l8 8M16 8l-8 8"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   Dash: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M7 12h10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
+      <path
+        d="M7 12h10"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   SoundOn: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
-      <path d="M17 8a5 5 0 010 8M19.5 5.5a9 9 0 010 13" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" fill="none"/>
+      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
+      <path
+        d="M17 8a5 5 0 010 8M19.5 5.5a9 9 0 010 13"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        fill="none"
+      />
     </svg>
   ),
   SoundOff: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
-      <path d="M17 9l5 6M22 9l-5 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
+      <path
+        d="M17 9l5 6M22 9l-5 6"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   Shield: ({ size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M12 3l8 3v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-3z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" fill="none"/>
-      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M12 3l8 3v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-3z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path
+        d="M9 12l2 2 4-4"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   Star: ({ size = 14 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2l2.9 6.4 7 .7-5.3 4.7 1.6 6.8L12 17.3 5.8 20.6l1.6-6.8L2.1 9.1l7-.7L12 2z"/>
+      <path d="M12 2l2.9 6.4 7 .7-5.3 4.7 1.6 6.8L12 17.3 5.8 20.6l1.6-6.8L2.1 9.1l7-.7L12 2z" />
     </svg>
   ),
 };
@@ -75,14 +169,44 @@ const Icon = {
 // ─────────────────────────────────────────────────────────────
 // RESPONSE STATES
 // ─────────────────────────────────────────────────────────────
-const CYCLE = [null, 'yes', 'ok', 'maybe', 'no'];
+const CYCLE = [null, "yes", "ok", "maybe", "no"];
 const RMAP = {
-  yes:   { label: 'Yes, preferred',   bg: 'rgba(91, 200, 127, 0.16)',  bdr: 'rgba(91, 200, 127, 0.55)',  fg: '#5BC87F', Ico: Icon.CheckCircle },
-  ok:    { label: 'Yes, not ideal',   bg: 'rgba(122, 174, 232, 0.16)', bdr: 'rgba(122, 174, 232, 0.55)', fg: '#7AAEE8', Ico: Icon.Thumb },
-  maybe: { label: 'Looking into it',  bg: 'rgba(198, 163, 48, 0.18)',  bdr: 'rgba(198, 163, 48, 0.55)',  fg: '#E8C84A', Ico: Icon.Help },
-  no:    { label: "Can't make it",    bg: 'rgba(240, 112, 112, 0.14)', bdr: 'rgba(240, 112, 112, 0.55)', fg: '#F07070', Ico: Icon.XCircle },
+  yes: {
+    label: "Yes, preferred",
+    bg: "rgba(91, 200, 127, 0.16)",
+    bdr: "rgba(91, 200, 127, 0.55)",
+    fg: "#5BC87F",
+    Ico: Icon.CheckCircle,
+  },
+  ok: {
+    label: "Yes, not ideal",
+    bg: "rgba(122, 174, 232, 0.16)",
+    bdr: "rgba(122, 174, 232, 0.55)",
+    fg: "#7AAEE8",
+    Ico: Icon.Thumb,
+  },
+  maybe: {
+    label: "Looking into it",
+    bg: "rgba(198, 163, 48, 0.18)",
+    bdr: "rgba(198, 163, 48, 0.55)",
+    fg: "#E8C84A",
+    Ico: Icon.Help,
+  },
+  no: {
+    label: "Can't make it",
+    bg: "rgba(240, 112, 112, 0.14)",
+    bdr: "rgba(240, 112, 112, 0.55)",
+    fg: "#F07070",
+    Ico: Icon.XCircle,
+  },
 };
-const NULLR = { label: 'No response yet', bg: 'rgba(255,255,255,0.025)', bdr: 'rgba(255,255,255,0.10)', fg: 'rgba(242,242,240,0.30)', Ico: Icon.Dash };
+const NULLR = {
+  label: "No response yet",
+  bg: "rgba(255,255,255,0.025)",
+  bdr: "rgba(255,255,255,0.10)",
+  fg: "rgba(242,242,240,0.30)",
+  Ico: Icon.Dash,
+};
 
 const nextResp = (cur) => CYCLE[(CYCLE.indexOf(cur) + 1) % CYCLE.length];
 
@@ -101,32 +225,37 @@ function useNflAudio() {
   const [needsTap, setNeedsTap] = useState(false);
 
   useEffect(() => {
-    const a = new Audio('audio/mnf.mp3');
-    a.preload = 'auto';
+    const a = new Audio("audio/mnf.mp3");
+    a.preload = "auto";
     a.volume = 0.7;
     audioRef.current = a;
 
-    const onPlay  = () => { setPlaying(true);  setNeedsTap(false); };
+    const onPlay = () => {
+      setPlaying(true);
+      setNeedsTap(false);
+    };
     const onPause = () => setPlaying(false);
     const onEnded = () => setPlaying(false);
-    a.addEventListener('play', onPlay);
-    a.addEventListener('pause', onPause);
-    a.addEventListener('ended', onEnded);
+    a.addEventListener("play", onPlay);
+    a.addEventListener("pause", onPause);
+    a.addEventListener("ended", onEnded);
 
     const p = a.play();
     if (p && p.catch) {
       p.catch(() => {
         setNeedsTap(true);
-        const onTap = () => { a.play().catch(() => {}); };
-        window.addEventListener('pointerdown', onTap, { once: true });
-        window.addEventListener('keydown',     onTap, { once: true });
+        const onTap = () => {
+          a.play().catch(() => {});
+        };
+        window.addEventListener("pointerdown", onTap, { once: true });
+        window.addEventListener("keydown", onTap, { once: true });
       });
     }
     return () => {
       a.pause();
-      a.removeEventListener('play', onPlay);
-      a.removeEventListener('pause', onPause);
-      a.removeEventListener('ended', onEnded);
+      a.removeEventListener("play", onPlay);
+      a.removeEventListener("pause", onPause);
+      a.removeEventListener("ended", onEnded);
     };
   }, []);
 
@@ -146,10 +275,14 @@ function useNflAudio() {
 function AudioButton({ audio }) {
   return (
     <button
-      className={'audio-btn' + (audio.needsTap ? ' pulsing' : '')}
+      className={"audio-btn" + (audio.needsTap ? " pulsing" : "")}
       onClick={audio.toggle}
-      aria-label={audio.playing ? 'Mute' : 'Play sound'}
-      title={audio.playing ? 'Mute Monday Night Football theme' : 'Play Monday Night Football theme'}
+      aria-label={audio.playing ? "Mute" : "Play sound"}
+      title={
+        audio.playing
+          ? "Mute Monday Night Football theme"
+          : "Play Monday Night Football theme"
+      }
     >
       {audio.playing ? <Icon.SoundOn /> : <Icon.SoundOff />}
     </button>
@@ -157,19 +290,26 @@ function AudioButton({ audio }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// PERSISTENCE
+// PERSISTENCE — Supabase
 // ─────────────────────────────────────────────────────────────
-const LS_KEY = (leagueId) => `nffl.warroom.${leagueId}.v2`;
-
-function loadResponses(leagueId) {
-  try {
-    const raw = localStorage.getItem(LS_KEY(leagueId));
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  return JSON.parse(JSON.stringify(window.SEED_RESPONSES[leagueId]));
+function dbLoad(leagueId) {
+  return db
+    .from("responses")
+    .select("manager, votes, note")
+    .eq("league_id", leagueId);
 }
-function saveResponses(leagueId, data) {
-  try { localStorage.setItem(LS_KEY(leagueId), JSON.stringify(data)); } catch (e) {}
+
+function dbUpsert(leagueId, manager, managerData) {
+  const { note, ...rawVotes } = managerData;
+  const votes = Object.fromEntries(
+    Object.entries(rawVotes).filter(([, v]) => v != null),
+  );
+  return db
+    .from("responses")
+    .upsert(
+      { league_id: leagueId, manager, votes, note: note || "" },
+      { onConflict: "league_id,manager" },
+    );
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -197,8 +337,14 @@ function Landing({ onPick }) {
     <div className="landing">
       <div className="landing-eyebrow">Choose Your League</div>
       <div className="logo-row">
-        <LeagueLogoCard league={window.LEAGUES.wags} onClick={() => onPick('wags')} />
-        <LeagueLogoCard league={window.LEAGUES.fex}  onClick={() => onPick('fex')} />
+        <LeagueLogoCard
+          league={window.LEAGUES.wags}
+          onClick={() => onPick("wags")}
+        />
+        <LeagueLogoCard
+          league={window.LEAGUES.fex}
+          onClick={() => onPick("fex")}
+        />
       </div>
       <div className="logo-tag-bottom">Draft Night · Where the brains are</div>
     </div>
@@ -241,20 +387,24 @@ function PageHeader({ league, title, sub, right }) {
 function NamePicker({ league, onBack, onPick }) {
   return (
     <div className="page-wrap">
-      <PageHeader league={league}
-                  title="Who Are You?"
-                  sub="Pick your manager to start voting"
-                  right={
-                    <button className="btn-pill" onClick={onBack}>
-                      <Icon.Back size={14} /> Change League
-                    </button>
-                  } />
+      <PageHeader
+        league={league}
+        title="Who Are You?"
+        sub="Pick your manager to start voting"
+        right={
+          <button className="btn-pill" onClick={onBack}>
+            <Icon.Back size={14} /> Change League
+          </button>
+        }
+      />
 
       <div className="name-picker-grid">
         {league.managers.map((m) => (
-          <button key={m.name}
-                  className="name-tile"
-                  onClick={() => onPick(m.name)}>
+          <button
+            key={m.name}
+            className="name-tile"
+            onClick={() => onPick(m.name)}
+          >
             <div className="avatar-lg">{initials(m.name)}</div>
             <div className="tile-name">{m.name}</div>
             <div className="tile-team">{m.team}</div>
@@ -272,13 +422,13 @@ function ResponseCell({ value, onClick, clickable, isBest }) {
   const r = value ? RMAP[value] : NULLR;
   const Ico = r.Ico;
   return (
-    <td className={'cell-date' + (isBest ? ' best' : '')}>
+    <td className={"cell-date" + (isBest ? " best" : "")}>
       <div
-        className={'resp-chip' + (clickable ? ' clickable' : '')}
-        style={{ '--resp-bg': r.bg, '--resp-bdr': r.bdr, '--resp-fg': r.fg }}
+        className={"resp-chip" + (clickable ? " clickable" : "")}
+        style={{ "--resp-bg": r.bg, "--resp-bdr": r.bdr, "--resp-fg": r.fg }}
         onClick={clickable ? onClick : undefined}
         title={clickable ? `${r.label} · click to change` : r.label}
-        role={clickable ? 'button' : undefined}
+        role={clickable ? "button" : undefined}
         aria-label={r.label}
       >
         <Ico size={24} />
@@ -291,18 +441,26 @@ function ResponseCell({ value, onClick, clickable, isBest }) {
 // SUMMARY CARD
 // ─────────────────────────────────────────────────────────────
 function SummaryCard({ date, counts, total, isBest }) {
-  const totalVotes = (counts.yes||0) + (counts.ok||0) + (counts.maybe||0) + (counts.no||0);
+  const totalVotes =
+    (counts.yes || 0) +
+    (counts.ok || 0) +
+    (counts.maybe || 0) +
+    (counts.no || 0);
   return (
-    <div className={'summary-card' + (isBest ? ' best' : '')}>
+    <div className={"summary-card" + (isBest ? " best" : "")}>
       <div className="summary-card-top">
         <div>
           <div className="summary-day">{date.day}</div>
           <div className="summary-date">{date.short}</div>
         </div>
         {isBest ? (
-          <span className="summary-best-tag"><Icon.Star size={11} /> Best</span>
+          <span className="summary-best-tag">
+            <Icon.Star size={11} /> Best
+          </span>
         ) : (
-          <span className="summary-vote-count">{totalVotes > 0 ? `${totalVotes} in` : '—'}</span>
+          <span className="summary-vote-count">
+            {totalVotes > 0 ? `${totalVotes} in` : "—"}
+          </span>
         )}
       </div>
       <div className="summary-rows">
@@ -315,12 +473,18 @@ function SummaryCard({ date, counts, total, isBest }) {
                 <Ico size={16} />
               </div>
               <div className="summary-row-bar">
-                <div className="summary-row-bar-fill"
-                     style={{ width: total > 0 ? (n / total * 100) + '%' : '0%',
-                              background: meta.fg }} />
+                <div
+                  className="summary-row-bar-fill"
+                  style={{
+                    width: total > 0 ? (n / total) * 100 + "%" : "0%",
+                    background: meta.fg,
+                  }}
+                />
               </div>
-              <div className="summary-row-count"
-                   style={{ color: n > 0 ? meta.fg : 'rgba(242,242,240,0.18)' }}>
+              <div
+                className="summary-row-count"
+                style={{ color: n > 0 ? meta.fg : "rgba(242,242,240,0.18)" }}
+              >
                 {n}
               </div>
             </div>
@@ -336,16 +500,24 @@ function SummaryCard({ date, counts, total, isBest }) {
 // ─────────────────────────────────────────────────────────────
 function BusyModal({ onClose }) {
   return (
-    <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-eyebrow">Whoa, whoa, whoa</div>
         <h2 className="modal-title">Are you really that busy?!?</h2>
         <p className="modal-body">
-          You've marked yourself unavailable for more than five draft nights. Either your calendar
-          is roasted or you're trying to dodge the draft. <b>The commissioner is watching.</b>
+          You've marked yourself unavailable for more than five draft nights.
+          Either your calendar is roasted or you're trying to dodge the draft.{" "}
+          <b>The commissioner is watching.</b>
         </p>
         <div className="modal-btn-row">
-          <button className="modal-btn" onClick={onClose}>Yeah, I'm Cooked</button>
+          <button className="modal-btn" onClick={onClose}>
+            Yeah, I'm Cooked
+          </button>
         </div>
       </div>
     </div>
@@ -356,20 +528,63 @@ function BusyModal({ onClose }) {
 // MAIN GRID
 // ─────────────────────────────────────────────────────────────
 function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
-  const [responses, setResponses] = useState(() => loadResponses(league.id));
+  const [responses, setResponses] = useState(() =>
+    JSON.parse(JSON.stringify(window.SEED_RESPONSES[league.id])),
+  );
+  const [loading, setLoading] = useState(true);
   const [savedAt, setSavedAt] = useState(null);
   const [showBusy, setShowBusy] = useState(false);
   const prevNoCount = useRef(0);
 
+  // Load from Supabase on mount
   useEffect(() => {
-    saveResponses(league.id, responses);
-    setSavedAt(Date.now());
-  }, [responses, league.id]);
+    let live = true;
+    dbLoad(league.id).then(({ data }) => {
+      if (!live || !data) return;
+      setResponses((prev) => {
+        const merged = { ...prev };
+        data.forEach((row) => {
+          merged[row.manager] = { ...(row.votes || {}), note: row.note || "" };
+        });
+        return merged;
+      });
+      setLoading(false);
+    });
+    return () => {
+      live = false;
+    };
+  }, [league.id]);
+
+  // Realtime — sync other managers' changes live
+  useEffect(() => {
+    const channel = db
+      .channel(`responses:${league.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "responses",
+          filter: `league_id=eq.${league.id}`,
+        },
+        ({ new: row }) => {
+          if (!row) return;
+          setResponses((prev) => ({
+            ...prev,
+            [row.manager]: { ...(row.votes || {}), note: row.note || "" },
+          }));
+        },
+      )
+      .subscribe();
+    return () => {
+      db.removeChannel(channel);
+    };
+  }, [league.id]);
 
   // Track my "no" count and pop modal when crossing >5
   const myNoCount = useMemo(
-    () => league.dates.filter(d => responses[me]?.[d.id] === 'no').length,
-    [responses, me, league.dates]
+    () => league.dates.filter((d) => responses[me]?.[d.id] === "no").length,
+    [responses, me, league.dates],
   );
   useEffect(() => {
     if (myNoCount > 5 && prevNoCount.current <= 5) setShowBusy(true);
@@ -377,14 +592,20 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
   }, [myNoCount]);
 
   const setResp = (person, dateId, val) => {
-    setResponses(prev => ({
-      ...prev,
-      [person]: { ...(prev[person] || {}), [dateId]: val },
-    }));
+    setResponses((prev) => {
+      const updated = {
+        ...prev,
+        [person]: { ...(prev[person] || {}), [dateId]: val },
+      };
+      dbUpsert(league.id, person, updated[person]).then(({ error }) => {
+        if (!error) setSavedAt(Date.now());
+      });
+      return updated;
+    });
   };
 
   const setNote = (person, val) => {
-    setResponses(prev => ({
+    setResponses((prev) => ({
       ...prev,
       [person]: { ...(prev[person] || {}), note: val },
     }));
@@ -392,9 +613,9 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
 
   // Summary calc per date
   const summary = useMemo(() => {
-    return league.dates.map(d => {
+    return league.dates.map((d) => {
       const c = { yes: 0, ok: 0, maybe: 0, no: 0 };
-      league.managers.forEach(p => {
+      league.managers.forEach((p) => {
         const r = responses[p.name]?.[d.id];
         if (r && c[r] !== undefined) c[r]++;
       });
@@ -404,16 +625,19 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
 
   // Best = max(yes*2 + ok)
   const bestIds = useMemo(() => {
-    const scored = summary.map(s => ({ id: s.date.id, score: s.c.yes * 2 + s.c.ok }));
-    const max = Math.max(...scored.map(s => s.score));
+    const scored = summary.map((s) => ({
+      id: s.date.id,
+      score: s.c.yes * 2 + s.c.ok,
+    }));
+    const max = Math.max(...scored.map((s) => s.score));
     if (max <= 0) return [];
-    return scored.filter(s => s.score === max).map(s => s.id);
+    return scored.filter((s) => s.score === max).map((s) => s.id);
   }, [summary]);
 
   // Sort managers: me first, then keep the input order (matches the leagues' real draft order vibe)
   const sortedManagers = useMemo(() => {
-    const meEntry = league.managers.find(m => m.name === me);
-    const rest = league.managers.filter(m => m.name !== me);
+    const meEntry = league.managers.find((m) => m.name === me);
+    const rest = league.managers.filter((m) => m.name !== me);
     return meEntry ? [meEntry, ...rest] : league.managers;
   }, [league.managers, me]);
 
@@ -422,23 +646,33 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
       <PageHeader
         league={league}
         title="Pick The Draft Night"
-        sub={isAdmin
-          ? `Commish mode — ${me} · click any cell on any row`
-          : `Voting as ${me} · click a cell to cycle yes / not ideal / maybe / no / clear`}
+        sub={
+          isAdmin
+            ? `Commish mode — ${me} · click any cell on any row`
+            : `Voting as ${me} · click a cell to cycle yes / not ideal / maybe / no / clear`
+        }
         right={
           <>
-            <button className="btn-pill" onClick={onSwitchUser}>Switch User</button>
-            <button className="btn-pill" onClick={onBack}>Change League</button>
+            <button className="btn-pill" onClick={onSwitchUser}>
+              Switch User
+            </button>
+            <button className="btn-pill" onClick={onBack}>
+              Change League
+            </button>
           </>
         }
       />
 
       {isAdmin && (
         <div className="admin-banner">
-          <div className="banner-icon"><Icon.Shield size={22} /></div>
+          <div className="banner-icon">
+            <Icon.Shield size={22} />
+          </div>
           <div>
             <div className="admin-banner-title">Commish Mode · {me}</div>
-            <div className="admin-banner-sub">You can update any manager's row and notes.</div>
+            <div className="admin-banner-sub">
+              You can update any manager's row and notes.
+            </div>
           </div>
         </div>
       )}
@@ -451,8 +685,14 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
           const Ico = r.Ico;
           return (
             <div key={key} className="legend-item">
-              <span className="legend-swatch"
-                    style={{ background: r.bg, border: `1.5px solid ${r.bdr}`, color: r.fg }}>
+              <span
+                className="legend-swatch"
+                style={{
+                  background: r.bg,
+                  border: `1.5px solid ${r.bdr}`,
+                  color: r.fg,
+                }}
+              >
                 <Ico size={15} />
               </span>
               <span className="legend-label">{r.label}</span>
@@ -467,13 +707,20 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
             <thead>
               <tr>
                 <th className="col-name">Manager</th>
-                {league.dates.map(d => {
+                {league.dates.map((d) => {
                   const isBest = bestIds.includes(d.id);
                   return (
-                    <th key={d.id} className={'col-date' + (isBest ? ' best' : '')}>
+                    <th
+                      key={d.id}
+                      className={"col-date" + (isBest ? " best" : "")}
+                    >
                       <div className="date-day">{d.day}</div>
                       <div className="date-num">{d.short}</div>
-                      {isBest && <div className="best-tag"><Icon.Star size={10} /> Best</div>}
+                      {isBest && (
+                        <div className="best-tag">
+                          <Icon.Star size={10} /> Best
+                        </div>
+                      )}
                     </th>
                   );
                 })}
@@ -486,12 +733,21 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
                 const isMe = m.name === me;
                 const canEdit = isAdmin || isMe;
                 const row = responses[m.name] || {};
-                const filled = league.dates.filter(d => row[d.id]).length;
-                const filledClass = filled === league.dates.length
-                  ? ' full' : filled > 0 ? ' partial' : '';
+                const filled = league.dates.filter((d) => row[d.id]).length;
+                const filledClass =
+                  filled === league.dates.length
+                    ? " full"
+                    : filled > 0
+                      ? " partial"
+                      : "";
 
                 return (
-                  <tr key={m.name} className={(isMe ? 'me' : '') + (isMe && isAdmin ? ' admin' : '')}>
+                  <tr
+                    key={m.name}
+                    className={
+                      (isMe ? "me" : "") + (isMe && isAdmin ? " admin" : "")
+                    }
+                  >
                     <td className="cell-name">
                       <div className="name-cell-inner">
                         <div className="avatar">{initials(m.name)}</div>
@@ -500,7 +756,7 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
                             {m.name}
                             {isMe && (
                               <span className="name-cell-flag">
-                                {isAdmin ? '★ Commish' : '● You'}
+                                {isAdmin ? "★ Commish" : "● You"}
                               </span>
                             )}
                           </span>
@@ -508,17 +764,19 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
                         </div>
                       </div>
                     </td>
-                    {league.dates.map(d => (
+                    {league.dates.map((d) => (
                       <ResponseCell
                         key={d.id}
                         value={row[d.id]}
                         clickable={canEdit}
                         isBest={bestIds.includes(d.id)}
-                        onClick={() => setResp(m.name, d.id, nextResp(row[d.id]))}
+                        onClick={() =>
+                          setResp(m.name, d.id, nextResp(row[d.id]))
+                        }
                       />
                     ))}
                     <td className="cell-date">
-                      <span className={'done-pill' + filledClass}>
+                      <span className={"done-pill" + filledClass}>
                         {filled}/{league.dates.length}
                       </span>
                     </td>
@@ -528,12 +786,23 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
                           type="text"
                           className="note-input"
                           placeholder="Add a note…"
-                          value={row.note || ''}
+                          value={row.note || ""}
                           onChange={(e) => setNote(m.name, e.target.value)}
+                          onBlur={() =>
+                            dbUpsert(league.id, m.name, responses[m.name]).then(
+                              ({ error }) => {
+                                if (!error) setSavedAt(Date.now());
+                              },
+                            )
+                          }
                         />
                       ) : (
-                        <div className={'note-input readonly' + (row.note ? '' : ' empty')}>
-                          {row.note || '—'}
+                        <div
+                          className={
+                            "note-input readonly" + (row.note ? "" : " empty")
+                          }
+                        >
+                          {row.note || "—"}
                         </div>
                       )}
                     </td>
@@ -547,18 +816,24 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
 
       <h3 className="summary-title">Date Summary</h3>
       <div className="summary-grid">
-        {summary.map(s => (
-          <SummaryCard key={s.date.id}
-                       date={s.date}
-                       counts={s.c}
-                       total={league.managers.length}
-                       isBest={bestIds.includes(s.date.id)} />
+        {summary.map((s) => (
+          <SummaryCard
+            key={s.date.id}
+            date={s.date}
+            counts={s.c}
+            total={league.managers.length}
+            isBest={bestIds.includes(s.date.id)}
+          />
         ))}
       </div>
 
       <div className="foot-note">
         <span className="dot-flash" />
-        Changes saved locally · {savedAt ? `last write ${new Date(savedAt).toLocaleTimeString()}` : 'autosaving'}
+        {loading
+          ? "Loading…"
+          : savedAt
+            ? `Saved · ${new Date(savedAt).toLocaleTimeString()}`
+            : "Live · changes sync to all managers"}
       </div>
 
       {showBusy && <BusyModal onClose={() => setShowBusy(false)} />}
@@ -571,36 +846,48 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
 // ─────────────────────────────────────────────────────────────
 function App() {
   const audio = useNflAudio();
-  const [route, setRoute] = useState({ name: 'landing' });
+  const [route, setRoute] = useState({ name: "landing" });
 
-  useEffect(() => { window.scrollTo(0, 0); }, [route.name, route.leagueId]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route.name, route.leagueId]);
 
-  const pickLeague = (leagueId) => setRoute({ name: 'picker', leagueId });
+  const pickLeague = (leagueId) => setRoute({ name: "picker", leagueId });
   const pickName = (name) => {
     const isAdmin = name === window.ADMIN_NAME;
-    setRoute(r => ({ name: 'grid', leagueId: r.leagueId, me: name, isAdmin }));
+    setRoute((r) => ({
+      name: "grid",
+      leagueId: r.leagueId,
+      me: name,
+      isAdmin,
+    }));
   };
-  const backToLanding = () => setRoute({ name: 'landing' });
-  const backToPicker  = () => setRoute(r => ({ name: 'picker', leagueId: r.leagueId }));
+  const backToLanding = () => setRoute({ name: "landing" });
+  const backToPicker = () =>
+    setRoute((r) => ({ name: "picker", leagueId: r.leagueId }));
 
   return (
     <>
       <AudioButton audio={audio} />
-      {route.name === 'landing' && <Landing onPick={pickLeague} />}
-      {route.name === 'picker' && (
-        <NamePicker league={window.LEAGUES[route.leagueId]}
-                    onBack={backToLanding}
-                    onPick={pickName} />
+      {route.name === "landing" && <Landing onPick={pickLeague} />}
+      {route.name === "picker" && (
+        <NamePicker
+          league={window.LEAGUES[route.leagueId]}
+          onBack={backToLanding}
+          onPick={pickName}
+        />
       )}
-      {route.name === 'grid' && (
-        <PollGrid league={window.LEAGUES[route.leagueId]}
-                  me={route.me}
-                  isAdmin={route.isAdmin}
-                  onBack={backToLanding}
-                  onSwitchUser={backToPicker} />
+      {route.name === "grid" && (
+        <PollGrid
+          league={window.LEAGUES[route.leagueId]}
+          me={route.me}
+          isAdmin={route.isAdmin}
+          onBack={backToLanding}
+          onSwitchUser={backToPicker}
+        />
       )}
     </>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
