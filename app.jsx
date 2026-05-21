@@ -397,6 +397,7 @@ function PageHeader({ league, title, sub, right }) {
 // NAME PICKER
 // ─────────────────────────────────────────────────────────────
 function NamePicker({ league, onBack, onPick }) {
+  // onPick(name, shiftKey)
   return (
     <div className="page-wrap">
       <PageHeader
@@ -415,7 +416,7 @@ function NamePicker({ league, onBack, onPick }) {
           <button
             key={m.name}
             className="name-tile"
-            onClick={() => onPick(m.name)}
+            onClick={(e) => onPick(m.name, e.shiftKey)}
           >
             <div className="avatar-lg">{initials(m.name)}</div>
             <div className="tile-name">{m.name}</div>
@@ -865,8 +866,8 @@ function App() {
   }, [route.name, route.leagueId]);
 
   const pickLeague = (leagueId) => setRoute({ name: "picker", leagueId });
-  const pickName = (name) => {
-    const isAdmin = name === window.ADMIN_NAME;
+  const pickName = (name, shiftKey = false) => {
+    const isAdmin = name === window.ADMIN_NAME && shiftKey;
     setRoute((r) => ({
       name: "grid",
       leagueId: r.leagueId,
