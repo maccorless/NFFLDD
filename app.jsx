@@ -412,17 +412,19 @@ function NamePicker({ league, onBack, onPick }) {
       />
 
       <div className="name-picker-grid">
-        {league.managers.map((m) => (
-          <button
-            key={m.name}
-            className="name-tile"
-            onClick={(e) => onPick(m.name, e.shiftKey)}
-          >
-            <div className="avatar-lg">{initials(m.name)}</div>
-            <div className="tile-name">{m.name}</div>
-            <div className="tile-team">{m.team}</div>
-          </button>
-        ))}
+        {[...league.managers]
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((m) => (
+            <button
+              key={m.name}
+              className="name-tile"
+              onClick={(e) => onPick(m.name, e.shiftKey)}
+            >
+              <div className="avatar-lg">{initials(m.name)}</div>
+              <div className="tile-name">{m.name}</div>
+              <div className="tile-team">{m.team}</div>
+            </button>
+          ))}
       </div>
     </div>
   );
@@ -650,8 +652,12 @@ function PollGrid({ league, me, isAdmin, onBack, onSwitchUser }) {
   // Sort managers: me first, then keep the input order (matches the leagues' real draft order vibe)
   const sortedManagers = useMemo(() => {
     const meEntry = league.managers.find((m) => m.name === me);
-    const rest = league.managers.filter((m) => m.name !== me);
-    return meEntry ? [meEntry, ...rest] : league.managers;
+    const rest = league.managers
+      .filter((m) => m.name !== me)
+      .sort((a, b) => a.name.localeCompare(b.name));
+    return meEntry
+      ? [meEntry, ...rest]
+      : [...league.managers].sort((a, b) => a.name.localeCompare(b.name));
   }, [league.managers, me]);
 
   return (
