@@ -52,7 +52,7 @@ window.LEAGUES = {
     name: "NFFL Wags",
     badge: "Wags",
     est: "EST · 1994",
-    logo: "assets/wags.png",
+    logo: "assets/wags.jpg",
     logoContain: false,
     sub: "12 managers · The OG",
     managers: [
@@ -76,7 +76,7 @@ window.LEAGUES = {
     name: "NFFL Fex",
     badge: "Fex",
     est: "EST · 1997",
-    logo: "assets/fex.png",
+    logo: "assets/fex.jpg",
     logoPlaceholder: false,
     logoContain: false,
     sub: "12 managers · The Sequel",
